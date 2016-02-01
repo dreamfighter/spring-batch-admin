@@ -90,7 +90,7 @@
 			</tr>
 			<tr class="name-sublevel1-even">
 				<td>Exit Message</td>
-				<td>${jobExecutionInfo.jobExecution.exitStatus.exitDescription}</td>
+				<td><pre>${jobExecutionInfo.jobExecution.exitStatus.exitDescription}</pre></td>
 			</tr>
 			<tr class="name-sublevel1-odd">
 				<#assign url><@spring.url relativeUrl="${servletPath}/jobs/executions/${jobExecutionInfo.id?c}/steps"/></#assign>
