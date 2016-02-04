@@ -293,7 +293,14 @@ public class HomeController implements ApplicationContextAware, InitializingBean
 		if (servletPath == null) {
 			servletPath = new UrlPathHelper().getServletPath(request);
 		}
-		//model.addAttribute("servletPath", servletPath);
+		
+		logger.warn("this.servletPath = " + this.servletPath);
+		logger.warn("servletPath = " + servletPath);
+		if (servletPath.endsWith("/home")) {
+			servletPath = servletPath.substring(servletPath.length() - 5);
+		}
+		
+		model.addAttribute("servletPath", servletPath);
 		List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
 		if (!request.getRequestURI().endsWith(".json")) {
 			resources.addAll(defaultResources);
