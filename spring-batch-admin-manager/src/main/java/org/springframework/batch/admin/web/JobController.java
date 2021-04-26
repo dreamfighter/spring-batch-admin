@@ -118,7 +118,7 @@ public class JobController {
 		return path;
 	}
 
-	@RequestMapping(value = "/jobs/{jobName}", method = RequestMethod.POST)
+	@RequestMapping(value = {"/jobs/{jobName}","/jobs/{jobName}.json"}, method = RequestMethod.POST)
 	public String launch(ModelMap model, @ModelAttribute("jobName") String jobName,
 			@ModelAttribute("launchRequest") LaunchRequest launchRequest, Errors errors,
 			@RequestParam(defaultValue = "execution") String origin) {
@@ -163,7 +163,7 @@ public class JobController {
 
 	}
 
-	@RequestMapping(value = "/jobs/{jobName}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/jobs/{jobName}","/jobs/{jobName}.json"}, method = RequestMethod.GET)
 	public String details(ModelMap model, @ModelAttribute("jobName") String jobName, Errors errors,
 			@RequestParam(defaultValue = "0") int startJobInstance, @RequestParam(defaultValue = "20") int pageSize) {
 
@@ -196,7 +196,7 @@ public class JobController {
 
 	}
 
-	@RequestMapping(value = "/jobs", method = RequestMethod.GET)
+	@RequestMapping(value = {"/jobs","/jobs.json"}, method = RequestMethod.GET)
 	public void jobs(ModelMap model, @RequestParam(defaultValue = "0") int startJob,
 			@RequestParam(defaultValue = "20") int pageSize) {
 		int total = jobService.countJobs();

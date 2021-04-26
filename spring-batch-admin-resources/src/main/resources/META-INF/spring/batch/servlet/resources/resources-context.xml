@@ -169,6 +169,8 @@
 
 	<bean id="home" parent="standard" />
 
+	<bean id="error" parent="standard" />
+
 	<bean id="home.json" parent="standard.json">
 		<property name="attributes">
 			<props merge="true">

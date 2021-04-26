@@ -106,7 +106,7 @@ public class JobExecutionController {
 		this.jobService = jobService;
 	}
 
-	@RequestMapping(value = "/jobs/executions/{jobExecutionId}", method = RequestMethod.DELETE)
+	@RequestMapping(value = {"/jobs/executions/{jobExecutionId}","/jobs/executions/{jobExecutionId}.json"}, method = RequestMethod.DELETE)
 	public String stop(Model model, @ModelAttribute("stopRequest") StopRequest stopRequest, Errors errors,
 			@PathVariable Long jobExecutionId) {
 
@@ -181,7 +181,7 @@ public class JobExecutionController {
 
 	}
 
-	@RequestMapping(value = { "/jobs/{jobName}/{jobInstanceId}/executions", "/jobs/{jobName}/{jobInstanceId}" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/jobs/{jobName}/{jobInstanceId}/executions","/jobs/{jobName}/{jobInstanceId}/executions.json", "/jobs/{jobName}/{jobInstanceId}", "/jobs/{jobName}/{jobInstanceId}.json" }, method = RequestMethod.GET)
 	public String listForInstance(Model model, @PathVariable String jobName, @PathVariable long jobInstanceId,
 			@ModelAttribute("date") Date date, Errors errors) {
 
@@ -217,7 +217,7 @@ public class JobExecutionController {
 
 	}
 
-	@RequestMapping(value = "/jobs/{jobName}/{jobInstanceId}/executions", method = RequestMethod.POST)
+	@RequestMapping(value = {"/jobs/{jobName}/{jobInstanceId}/executions","/jobs/{jobName}/{jobInstanceId}/executions.json"}, method = RequestMethod.POST)
 	public String restart(Model model, @PathVariable String jobName, @PathVariable long jobInstanceId,
 			@ModelAttribute("date") Date date, Errors errors) {
 
@@ -314,7 +314,7 @@ public class JobExecutionController {
 
 	}
 
-	@RequestMapping(value = "/jobs/executions/{jobExecutionId}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/jobs/executions/{jobExecutionId}","/jobs/executions/{jobExecutionId}.json"}, method = RequestMethod.GET)
 	public String detail(Model model, @PathVariable Long jobExecutionId, @ModelAttribute("date") Date date,
 			Errors errors) {
 
@@ -326,6 +326,7 @@ public class JobExecutionController {
 //			Collection<StepExecution> stepExecutions = new ArrayList<StepExecution>(jobExecution.getStepExecutions());
 			List<StepExecutionInfo> stepExecutionInfos = new ArrayList<StepExecutionInfo>();
 
+			logger.info("stepExecutionInfos=>"+stepExecutionInfos.size());
 			for (StepExecution stepExecution : jobExecution.getStepExecutions()) {
 				stepExecutionInfos.add(new StepExecutionInfo(stepExecution, timeZone));
 			}

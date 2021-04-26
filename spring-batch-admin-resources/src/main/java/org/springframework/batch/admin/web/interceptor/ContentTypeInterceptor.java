@@ -23,15 +23,20 @@ import java.util.LinkedHashSet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.batch.admin.web.util.HomeController;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
+import org.springframework.web.util.UriUtils;
 import org.springframework.web.util.WebUtils;
 
 /**
@@ -45,6 +50,7 @@ import org.springframework.web.util.WebUtils;
 public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements BeanFactoryAware {
 
 	private Collection<String> extensions = new HashSet<String>();
+	private static Log logger = LogFactory.getLog(ContentTypeInterceptor.class);
 
 	private BeanFactory beanFactory;
 
@@ -59,6 +65,7 @@ public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements
 	 */
 	public void setExtensions(Collection<String> extensions) {
 		this.extensions = new LinkedHashSet<String>(extensions);
+		logger.info("extension set");
 	}
 
 	@Override
@@ -78,7 +85,7 @@ public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements
 		return true;
 
 	}
-
+	
 	/**
 	 * Compare the extension of the request path (if there is one) with the set provided, and if it matches then add the
 	 * same extension to the view name, if it is not already present.
@@ -88,18 +95,25 @@ public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-
+		logger.info(modelAndView);
 		if (modelAndView == null) {
 			return;
 		}
 
+		
 		String pathInfo = request.getPathInfo();
-		String path = pathInfo==null ? "" : WebUtils.extractFullFilenameFromUrlPath(pathInfo);
-		if (!path.contains(".")) {
+		if(pathInfo==null) {
+			pathInfo = request.getRequestURI();
+		}
+		String path = pathInfo==null ? "" : UriUtils.extractFileExtension(pathInfo);
+		//
+		// deprecated in spring 4
+		//String path = pathInfo==null ? "" : WebUtils.extractFullFilenameFromUrlPath(pathInfo);
+		
+		String extension = pathInfo==null ? "" : UriUtils.extractFileExtension(pathInfo);
+		if (extension==null) {
 			return;
 		}
-		String extension = path.substring(path.lastIndexOf(".") + 1);
-
 		exposeErrors(modelAndView.getModelMap());
 
 		if (extensions.contains(extension)) {

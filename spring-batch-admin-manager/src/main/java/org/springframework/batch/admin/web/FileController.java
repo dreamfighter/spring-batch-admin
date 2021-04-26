@@ -115,7 +115,7 @@ public class FileController {
 
 	}
 
-	@RequestMapping(value = "/files", method = RequestMethod.GET)
+	@RequestMapping(value = {"/files","/files.json"}, method = RequestMethod.GET)
 	public void list(ModelMap model, @RequestParam(defaultValue = "0") int startFile,
 			@RequestParam(defaultValue = "20") int pageSize) throws Exception {
 

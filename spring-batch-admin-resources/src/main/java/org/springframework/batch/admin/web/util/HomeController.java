@@ -318,7 +318,7 @@ public class HomeController implements ApplicationContextAware, InitializingBean
 	 * 
 	 * @return a map of URI pattern to request methods accepted
 	 */
-	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
+	@RequestMapping(value = {"/", "/home", "/home.json" }, method = RequestMethod.GET)
 	public String getResources(HttpServletRequest request, ModelMap model) {
 
 		String servletPath = this.servletPath;
@@ -331,36 +331,6 @@ public class HomeController implements ApplicationContextAware, InitializingBean
 			resources.addAll(defaultResources);
 		}
 		
-		resources.addAll(jsonResources);
-		model.addAttribute("resources", resources);
-		return "home";
-	}
-
-	/**
-	 * Inspect the handler mapping at the level of HTTP {@link RequestMethod}.
-	 * Each URI pattern that is mapped can be mapped to multiple request
-	 * methods. If the mapping is not explicit this method only returns GET
-	 * (even though technically it would respond to POST as well).
-	 * 
-	 * @param request the current servlet request (used to extract a page
-	 * attribute "sevletPath")
-	 * @param model {@link org.springframework.ui.ModelMap} to be used
-	 * 
-	 * @return a map of URI pattern to request methods accepted
-	 */
-	@RequestMapping(value = { "/" }, method = RequestMethod.GET)
-	public String getRootResources(HttpServletRequest request, ModelMap model) {
-
-		String servletPath = this.servletPath;
-		if (servletPath == null) {
-			servletPath = new UrlPathHelper().getServletPath(request);
-		}
-		//model.addAttribute("servletPath", servletPath);
-		logger.info(request.getRequestURI());
-		List<ResourceInfo> resources = new ArrayList<ResourceInfo>();
-		if (!request.getRequestURI().endsWith(".json")) {
-			resources.addAll(defaultResources);
-		}
 		resources.addAll(jsonResources);
 		model.addAttribute("resources", resources);
 		return "home";
