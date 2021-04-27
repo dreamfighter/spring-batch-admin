@@ -31,9 +31,12 @@
 	<bean id="throttledTaskExecutor" class="org.springframework.batch.admin.util.ThrottledTaskExecutor">
 		<property name="taskExecutor" ref="poolTaskExecutor" />
 	</bean>
+	
+	<bean id="executionContextSerializer" class="org.springframework.batch.admin.serializer.BackwardsCompatibleSerializer"/>
+		
 
 	<bean id="jobRepository" class="org.springframework.batch.core.repository.support.JobRepositoryFactoryBean"
-		p:dataSource-ref="dataSource" p:transactionManager-ref="transactionManager" />
+		p:dataSource-ref="dataSource" p:serializer-ref="executionContextSerializer" p:transactionManager-ref="transactionManager" />
 
 	<bean id="jobExplorer" class="org.springframework.batch.core.explore.support.JobExplorerFactoryBean"
 		p:dataSource-ref="dataSource" />

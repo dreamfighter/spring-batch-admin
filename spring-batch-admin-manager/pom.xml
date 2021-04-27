@@ -117,6 +117,11 @@ visualization of Batch meta data, and also launching and stopping jobs inside th
 			<artifactId>commons-fileupload</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>javax.validation</groupId>
+		    <artifactId>validation-api</artifactId>
+		    <version>2.0.1.Final</version>
+		</dependency>
+		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>jcl-over-slf4j</artifactId>
 		</dependency>

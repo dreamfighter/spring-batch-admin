@@ -25,6 +25,8 @@ import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.admin.domain.JobExecutionInfo;
 import org.springframework.batch.admin.domain.JobInfo;
 import org.springframework.batch.admin.domain.support.JobParametersExtractor;
@@ -58,6 +60,8 @@ import org.springframework.web.util.HtmlUtils;
  */
 @Controller
 public class JobController {
+
+	private static Log logger = LogFactory.getLog(JobController.class);
 
 	private final JobService jobService;
 
@@ -127,6 +131,10 @@ public class JobController {
 		String params = launchRequest.jobParameters;
 
 		JobParameters jobParameters = jobParametersExtractor.fromString(params);
+		for(String s:jobParameters.getParameters().keySet()) {
+			logger.info(jobParameters.getParameters().get(s));
+		}
+		
 
 		try {
 			JobExecution jobExecution = jobService.launch(jobName, jobParameters);

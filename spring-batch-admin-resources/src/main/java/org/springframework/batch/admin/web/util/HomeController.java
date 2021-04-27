@@ -123,12 +123,10 @@ public class HomeController implements ApplicationContextAware, InitializingBean
 	 * @see InitializingBean#afterPropertiesSet()
 	 */
 	public void afterPropertiesSet() throws Exception {
-		logger.info("afterPropertiesSet=>HERE");
 		if (defaultProperties == null || defaultProperties.isEmpty()) {
 			findResources();
 		}
 		else {
-			logger.info("findResources=>HERE2");
 			this.urls = buildUrlsFromProperties(defaultProperties);
 			this.defaultResources = buildResourcesFromProperties(defaultProperties, defaultProperties);
 			this.jsonResources = buildResourcesFromProperties(jsonProperties, defaultProperties);
@@ -178,12 +176,12 @@ public class HomeController implements ApplicationContextAware, InitializingBean
 		for(RequestMappingInfo mappingInfo: annotationMapping.getHandlerMethods().keySet()) {
 			HandlerMethod methodHandler = annotationMapping.getHandlerMethods().get(mappingInfo);
 			handlerMap.put(mappingInfo.getName(),methodHandler.getBean());
-			logger.info("mappingInfo=>"+mappingInfo.getDirectPaths().toString());
-			Iterator<String> i = mappingInfo.getDirectPaths().iterator();
-			while(i.hasNext()) {
-				String path = i.next();
-				logger.info("path=>"+path);
-			}
+//			logger.info("mappingInfo=>"+mappingInfo.getDirectPaths().toString());
+//			Iterator<String> i = mappingInfo.getDirectPaths().iterator();
+//			while(i.hasNext()) {
+//				String path = i.next();
+//				logger.info("path=>"+path);
+//			}
 		}
 		
 		

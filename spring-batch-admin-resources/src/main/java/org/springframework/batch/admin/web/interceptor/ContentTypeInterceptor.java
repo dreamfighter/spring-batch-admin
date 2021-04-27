@@ -25,19 +25,16 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.batch.admin.web.util.HomeController;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.BeanFactoryAware;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.springframework.web.util.UriUtils;
-import org.springframework.web.util.WebUtils;
 
 /**
  * Interceptor that looks for an extension on the request path and adds it to the view name if it matches a list
@@ -65,7 +62,7 @@ public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements
 	 */
 	public void setExtensions(Collection<String> extensions) {
 		this.extensions = new LinkedHashSet<String>(extensions);
-		logger.info("extension set");
+		//logger.info("extension set");
 	}
 
 	@Override
@@ -95,7 +92,7 @@ public class ContentTypeInterceptor extends HandlerInterceptorAdapter implements
 	@Override
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
-		logger.info(modelAndView);
+		//logger.info(modelAndView);
 		if (modelAndView == null) {
 			return;
 		}
