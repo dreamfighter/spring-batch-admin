@@ -47,7 +47,7 @@ import org.springframework.util.Assert;
  * <p>This class has been tested upgrading from Spring Batch 4.2.1.RELEASE to 4.2.4.RELEASE.
  */
 public class BackwardsCompatibleSerializer extends Jackson2ExecutionContextStringSerializer {
-private static Log log = LogFactory.getLog(JobController.class);
+private static Log log = LogFactory.getLog(BackwardsCompatibleSerializer.class);
 
   private final ObjectMapper newObjectMapper;
 
@@ -64,8 +64,9 @@ private static Log log = LogFactory.getLog(JobController.class);
 
       Assert.notNull(context, "A context is required");
       Assert.notNull(out, "An OutputStream is required");
-      log.info("serialize => "+context);
-      legacyObjectMapper.writeValue(out, context);
+      if(!context.isEmpty()) {
+    	  legacyObjectMapper.writeValue(out, context);
+      }
       //super.serialize(context, out);
   }
 
@@ -76,9 +77,11 @@ private static Log log = LogFactory.getLog(JobController.class);
    */
   @Override
   public @NotNull Map<String, Object> deserialize(@NotNull InputStream in) throws IOException {
+	//log.info("deserialize");
     String json = inputStreamToString(in);
+    
     TypeReference<HashMap<String, Object>> typeRef = new TypeReference<HashMap<String, Object>>() {};
-    log.info(json);
+    //log.info(json);
     try {
       return super.deserialize(in);
     } catch (Exception e) {
