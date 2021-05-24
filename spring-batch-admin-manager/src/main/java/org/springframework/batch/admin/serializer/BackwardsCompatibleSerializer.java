@@ -13,6 +13,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.batch.admin.web.JobController;
@@ -64,9 +65,9 @@ private static Log log = LogFactory.getLog(BackwardsCompatibleSerializer.class);
 
       Assert.notNull(context, "A context is required");
       Assert.notNull(out, "An OutputStream is required");
-      if(!context.isEmpty()) {
-    	  legacyObjectMapper.writeValue(out, context);
-      }
+      //if(!context.isEmpty()) {
+      legacyObjectMapper.writeValue(out, context);
+      //}
       //super.serialize(context, out);
   }
 
